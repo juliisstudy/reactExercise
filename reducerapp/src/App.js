@@ -1,44 +1,23 @@
 import './App.css';
-import {useState,useReducer} from 'react';
-
-const reducer = (state,action)=>{
-  switch(action.type){
-    case 'increment':
-      return { ...state,count: state.count+1};
-    case 'decrement':
-      return {...state,count:state.count-1};
-    
-    case 'newUserInput':
-      return {...state,userInput:action.payload}
-    case 'tgColor':
-      return {...state,color:!state.color}
-    default:
-      throw new Error();
-  }
-}
-const ACTION ={
-  INCREMENT:'increment',
-  DECREMENT:'decrement',
-  NEW_USER_INPUT:'newUserInput',
-  TG_COLOR:'tgColor'
-}
+import Contact from './components/Contact'
+import Homepage from './components/Homepage';
+import {Routes,Route,Link} from "react-router-dom";
 
 function App() {
-  const [state,dispatch]=useReducer(reducer,{count:0,userInput:'',color:false})
-
-
-
-  return (
-    <div className="App" style={{color:state.color?'#FFF':'#FFF952'}}>
-      <input 
-        type = "text" value = {state.userInput} onChange = {(e)=>dispatch({type:ACTION.NEW_USER_INPUT,payload:e.target.value})}
-        />
-        <p>{state.count}</p>
-        <button onClick={()=>dispatch({type:ACTION.DECREMENT})}>-</button>
-        <button onClick={()=>dispatch({type:ACTION.INCREMENT})}>+</button>
-        <p>{state.userInput}</p>
+  
+  return(
+    <div>
+      <nav>
+        <Link to = "/" className='nav-item'>Homepage</Link>
+        <Link to = "/contact" className='nav-item'>Contact</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Homepage/>}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
+      </Routes>
     </div>
-  );
+
+    )
 }
 
 export default App;
